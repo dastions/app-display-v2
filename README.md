@@ -14,8 +14,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
 ## Screenshot
-
-**TODO**
+![image](https://user-images.githubusercontent.com/14354821/208718815-0772bcff-8c9c-4fec-a421-e71497d12895.png)
 
 ### Deployment
 
