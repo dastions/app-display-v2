@@ -1,19 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Route, Routes, NavLink, useLocation } from "react-router-dom";
+
 import { SocketContext } from './context';
 
-import logo from './logo.svg';
 import './App.css';
-import { toaster } from 'evergreen-ui';
+import { CogIcon, Pane } from "evergreen-ui";
 
-
+import MainLogo from "./logo.png";
+import Display from './routes/Display';
 
 const REFRESH_INTERVAL = 3e2;
 
 
 const App = (props) => {
-  const [data, setData] = useState({ elements: []});
+  
+  const [data, setData] = useState({ });
   const { socket } = useContext(SocketContext);
+  const location = useLocation();
 
+  
   useEffect(() => {
     setInterval(() => {
       socket.emit('refresh');
@@ -24,32 +29,44 @@ const App = (props) => {
     });
   }, [socket]);
 
-  useEffect(() => {
-    socket.io.on("error", (error) => {
-      toaster.danger("Error de conexión", {
-        id: 'socket-error',
-        description: 'Server Socket App not connected'
-      })
-    });
-  }, [socket]);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Pane display="flex" minHeight="100vh" minWidth="100vw">
+      <Pane flex={1} display="flex" flexDirection="column" className='App-header'>
+        <Pane display="flex" marginTop={16} marginBottom={16} minHeight="11vh" alignContent="center" flexDirection="row">
+          <Pane display="flex" margin="20px">
+            <NavLink
+              key={'main-nav'}
+              to={''}
+            >
+              <img
+                src={MainLogo}
+                alt=""
+                height={80}
+              />
+            </NavLink>
+          </Pane>
+          <Pane position="absolute" margin="auto" right={40} top={40}>
+          <NavLink
+            key={'config-nav'}
+            to={'config'}
+          >
+            <CogIcon color='gray700'></CogIcon>
+          </NavLink>
+          </Pane>
+        </Pane>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={ <Display data={data} /> }
+          />
+          <Route
+            path="config"
+            element={ <Pane /> }
+          />
+        </Routes>
+      </Pane>
+    </Pane>
   );
 }
 

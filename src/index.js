@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
 
 import './index.css';
+// import {fonts} from './static/fonts/digital_counter_7.tff'
+
 import App from './App';
 
 import { SocketProvider } from "./context";
