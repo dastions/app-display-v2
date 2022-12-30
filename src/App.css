@@ -44,3 +44,7 @@
 .textDisplay {
   font-size: 4rem;
 }
+
+.disabledPane {
+  opacity: 0.2;
+}

@@ -7,6 +7,7 @@ import './App.css';
 import { CogIcon, Pane } from "evergreen-ui";
 
 import MainLogo from "./logo.png";
+import QrApp from "./static/app.truckandscales.com.png";
 import Display from './routes/Display';
 
 const REFRESH_INTERVAL = 3e2;
@@ -32,8 +33,8 @@ const App = (props) => {
   return (
     <Pane display="flex" minHeight="100vh" minWidth="100vw">
       <Pane flex={1} display="flex" flexDirection="column" className='App-header'>
-        <Pane display="flex" marginTop={16} marginBottom={16} minHeight="11vh" alignContent="center" flexDirection="row">
-          <Pane display="flex" margin="20px">
+        <Pane>
+          <Pane display="flex" position="absolute" top={40} left={40} paddingTop={60} paddingLeft={70}>
             <NavLink
               key={'main-nav'}
               to={''}
@@ -45,13 +46,20 @@ const App = (props) => {
               />
             </NavLink>
           </Pane>
-          <Pane position="absolute" margin="auto" right={40} top={40}>
-          <NavLink
-            key={'config-nav'}
-            to={'config'}
-          >
-            <CogIcon color='gray700'></CogIcon>
-          </NavLink>
+          <Pane position="absolute" margin="auto" right={60} top={80} paddingRight={60}>
+            <NavLink
+              key={'config-nav'}
+              to={'config'}
+            >
+              <CogIcon color='gray700' size={20}></CogIcon>
+            </NavLink>
+          </Pane>
+          <Pane display="flex" position="absolute" bottom={40} right={40} >
+            <img
+              src={QrApp}
+              alt=""
+              height={120}
+            />
           </Pane>
         </Pane>
         <Routes>
