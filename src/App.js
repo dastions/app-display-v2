@@ -10,8 +10,7 @@ import MainLogo from "./logo.png";
 import QrApp from "./static/app.truckandscales.com.png";
 import Display from './routes/Display';
 
-const REFRESH_INTERVAL = 3e2;
-
+const REFRESH_INTERVAL = 200; // 3e2 200 milisegundos
 
 const App = (props) => {
   
@@ -26,6 +25,7 @@ const App = (props) => {
     }, REFRESH_INTERVAL);
 
     socket.on('refresh', (data) => {
+      console.log('Data recibida:', data);
       setData(data);
     });
   }, [socket]);
