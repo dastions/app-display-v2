@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Route, Routes, NavLink, useLocation } from "react-router-dom";
+import { Route, Routes, NavLink } from "react-router-dom";
 
 import { SocketContext } from './context';
 
@@ -16,7 +16,6 @@ const App = (props) => {
   
   const [data, setData] = useState({ });
   const { socket } = useContext(SocketContext);
-  const location = useLocation();
 
   
   useEffect(() => {
@@ -34,7 +33,7 @@ const App = (props) => {
     <Pane display="flex" minHeight="100vh" minWidth="100vw">
       <Pane flex={1} display="flex" flexDirection="column" className='App-header'>
         <Pane>
-          <Pane display="flex" position="absolute" top={40} left={40} paddingTop={60} paddingLeft={70}>
+          <Pane display="flex" position="absolute" top={45} left={0} paddingTop={60} paddingLeft={70}>
             <NavLink
               key={'main-nav'}
               to={''}
@@ -42,25 +41,19 @@ const App = (props) => {
               <img
                 src={MainLogo}
                 alt=""
-                height={80}
+                height={100}
+                className="main-logo"
               />
             </NavLink>
           </Pane>
-          <Pane position="absolute" margin="auto" right={60} top={80} paddingRight={60}>
+          {/* <Pane position="absolute" margin="auto" right={60} top={80} paddingRight={60}>
             <NavLink
               key={'config-nav'}
               to={'config'}
             >
               <CogIcon color='gray700' size={20}></CogIcon>
             </NavLink>
-          </Pane>
-          <Pane display="flex" position="absolute" bottom={40} right={40} >
-            <img
-              src={QrApp}
-              alt=""
-              height={120}
-            />
-          </Pane>
+          </Pane> */}
         </Pane>
         <Routes>
           <Route
@@ -68,10 +61,10 @@ const App = (props) => {
             path="/"
             element={ <Display data={data} /> }
           />
-          <Route
+          {/* <Route
             path="config"
             element={ <Pane /> }
-          />
+          /> */}
         </Routes>
       </Pane>
     </Pane>

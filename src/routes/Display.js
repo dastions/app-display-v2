@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
-import { Text, Alert, Pane, Card, Heading, Button, CrossIcon, ConfirmIcon, BarcodeIcon, TruckIcon } from "evergreen-ui";
+import { Pane, Card, Heading, TruckIcon } from "evergreen-ui";
 
 const Display = ({ data, ...props }) => {
   const [weight, setWeight] = useState('0');
@@ -22,7 +22,7 @@ const Display = ({ data, ...props }) => {
     <Fragment>
       <Pane width={1000} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <Pane
-          marginTop={16}
+          marginTop={50}
           marginBottom={16}
           display="flex"
         >
@@ -53,14 +53,13 @@ const Display = ({ data, ...props }) => {
           <Card
             width={480}
             minHeight={300}
-            elevation={1}
             padding={16}
             display="flex"
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
           >
-            <Heading size={600} marginBottom={16} color="muted">
+            <Heading size={1000} marginBottom={16} color="muted">
               Código QR del Peso
             </Heading>
             {weight && weight !== '0' ? (
@@ -71,11 +70,11 @@ const Display = ({ data, ...props }) => {
                 marginSize={4}
               />
             ) : (
-              <Heading size={400} color="muted">
+              <Heading size={700} color="muted">
                 Esperando peso...
               </Heading>
             )}
-            <Heading size={400} marginTop={16} color="muted">
+            <Heading size={700} marginTop={16} color="muted">
               Peso: {weight} Kg
             </Heading>
           </Card>
