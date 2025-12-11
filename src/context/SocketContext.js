@@ -5,10 +5,7 @@ import { toaster } from 'evergreen-ui';
 
 const SocketContext = createContext({ socket: null });
 
-const socketUrl = process.env.SOCKET_URL || 'http://192.168.1.5:4000';
-
-console.log(`SOCKET_URL: ${process.env.SOCKET_URL}`);
-console.log(`Socket: ${socketUrl}`);
+const socketUrl = process.env.SOCKET_URL || 'http://192.168.1.7:4000';
 
 const SocketProvider = ({ children }) => {
   const socket = socketIOClient(socketUrl);

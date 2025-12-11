@@ -4,10 +4,8 @@ import { Route, Routes, NavLink } from "react-router-dom";
 import { SocketContext } from './context';
 
 import './App.css';
-import { CogIcon, Pane } from "evergreen-ui";
 
 import MainLogo from "./logo.png";
-import QrApp from "./static/app.truckandscales.com.png";
 import Display from './routes/Display';
 
 const REFRESH_INTERVAL = 200; // 3e2 200 milisegundos
@@ -30,44 +28,36 @@ const App = (props) => {
   }, [socket]);
 
   return (
-    <Pane display="flex" minHeight="100vh" minWidth="100vw">
-      <Pane flex={1} display="flex" flexDirection="column" className='App-header'>
-        <Pane>
-          <Pane display="flex" position="absolute" top={45} left={0} paddingTop={60} paddingLeft={70}>
-            <NavLink
-              key={'main-nav'}
-              to={''}
-            >
-              <img
-                src={MainLogo}
-                alt=""
-                height={100}
-                className="main-logo"
-              />
-            </NavLink>
-          </Pane>
-          {/* <Pane position="absolute" margin="auto" right={60} top={80} paddingRight={60}>
-            <NavLink
-              key={'config-nav'}
-              to={'config'}
-            >
-              <CogIcon color='gray700' size={20}></CogIcon>
-            </NavLink>
-          </Pane> */}
-        </Pane>
+    <div className="app-container">
+      {/* Contenedor izquierdo - Main Logo */}
+      <div className="logo-container">
+        <NavLink
+          key={'main-nav'}
+          to={''}
+        >
+          <img
+            src={MainLogo}
+            alt=""
+            className="main-logo"
+          />
+        </NavLink>
+      </div>
+
+      {/* Contenedor central - Display */}
+      <div className="display-container App-header">
         <Routes>
           <Route
             exact
             path="/"
             element={ <Display data={data} /> }
           />
-          {/* <Route
-            path="config"
-            element={ <Pane /> }
-          /> */}
         </Routes>
-      </Pane>
-    </Pane>
+      </div>
+
+      {/* Contenedor derecho - Vacío */}
+      <div className="empty-container">
+      </div>
+    </div>
   );
 }
 
