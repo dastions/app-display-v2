@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import MainLogo from "../logo.png"
 import { Pane, Card, Heading, AddIcon } from "evergreen-ui";
+import "../App.css";
 
 const Display = ({ data, ...props }) => {
   const [weight, setWeight] = useState('0');
@@ -19,8 +20,8 @@ const Display = ({ data, ...props }) => {
   }, [data]);
 
   return (
-    <div className="display-wrapper">
-      <div className="display-content">
+    <div>
+      <div>
         <Card
           minHeight={300}
           padding={16}
@@ -28,38 +29,49 @@ const Display = ({ data, ...props }) => {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
-          className="main-display-card"
         >
           {/* Peso arriba */}
-          <div className="weight-card-container">
+          <div>
             <Card
               elevation={1}
               padding={0}
+              width={1300}
+              height={200}
+              backgroundColor="#FFB020"
               textAlign="right"
-              className='weightDisplay'
               marginTop={20}
+              overflow="hidden"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              position="relative"
             >
-              <div className="truck-icon-container" >
+              <div>
                 <img
+                  width={300}
                   src={MainLogo}
                   alt=""
-                  className="main-logo"
                 />
               </div>
-              <Heading marginTop={60} className="textDisplay">{weight} Kg</Heading>
+              <Heading marginTop={0} fontSize={100} paddingRight={20} className="weight-heading">{weight} Kg</Heading>
             </Card>
           </div>
-          
+
           {/* QR abajo */}
-          <div className="qr-card-content">
-              <QRCodeSVG
-                value={weight}
-                bgColor="#6f7381"
-                size={280}
-                level="H"
-                marginSize={4}
-                className="qr-code"
-              />
+          <div className="qr-container">
+            <Heading size={1000} className="qr-title">
+              Código QR del Peso
+            </Heading>
+            <QRCodeSVG
+              value={weight}
+              bgColor="#6f7381"
+              size={500}
+              level="H"
+              marginSize={4}
+            />
+            <Heading size={1000} className="qr-weight">
+              Peso: {weight} Kg
+            </Heading>
           </div>
         </Card>
       </div>

@@ -29,7 +29,7 @@ const App = (props) => {
   return (
     <div className="app-container">
       {/* Contenedor izquierdo - Main Logo */}
-      <div className="logo-container"> 
+      <div> 
         <NavLink
           key={'main-nav'}
           to={''}
@@ -38,7 +38,7 @@ const App = (props) => {
       </div>
 
       {/* Contenedor central - Display */}
-      <div className="display-container">
+      <div>
         <Routes>
           <Route
             exact
@@ -49,7 +49,7 @@ const App = (props) => {
       </div>
 
       {/* Contenedor derecho - Vacío */}
-      <div className="empty-container">
+      <div>
       </div>
     </div>
   );
