@@ -5,7 +5,6 @@ import { SocketContext } from './context';
 
 import './App.css';
 
-import MainLogo from "./logo.png";
 import Display from './routes/Display';
 
 const REFRESH_INTERVAL = 200; // 3e2 200 milisegundos
@@ -30,21 +29,16 @@ const App = (props) => {
   return (
     <div className="app-container">
       {/* Contenedor izquierdo - Main Logo */}
-      <div className="logo-container">
+      <div className="logo-container"> 
         <NavLink
           key={'main-nav'}
           to={''}
         >
-          <img
-            src={MainLogo}
-            alt=""
-            className="main-logo"
-          />
         </NavLink>
       </div>
 
       {/* Contenedor central - Display */}
-      <div className="display-container App-header">
+      <div className="display-container">
         <Routes>
           <Route
             exact

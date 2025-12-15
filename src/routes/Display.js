@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
-
-import { Pane, Card, Heading, TruckIcon } from "evergreen-ui";
+import MainLogo from "../logo.png"
+import { Pane, Card, Heading, AddIcon } from "evergreen-ui";
 
 const Display = ({ data, ...props }) => {
   const [weight, setWeight] = useState('0');
@@ -34,38 +34,32 @@ const Display = ({ data, ...props }) => {
           <div className="weight-card-container">
             <Card
               elevation={1}
-              padding={16}
+              padding={0}
               textAlign="right"
               className='weightDisplay'
+              marginTop={20}
             >
-              <div className="truck-icon-container">
-                <TruckIcon size={30} color="dark"></TruckIcon>
+              <div className="truck-icon-container" >
+                <img
+                  src={MainLogo}
+                  alt=""
+                  className="main-logo"
+                />
               </div>
-              <Heading marginTop={16} className="textDisplay">{weight} Kg</Heading>
+              <Heading marginTop={60} className="textDisplay">{weight} Kg</Heading>
             </Card>
           </div>
           
           {/* QR abajo */}
           <div className="qr-card-content">
-            <Heading size={1000} className="qr-title" color="muted">
-              Código QR del Peso
-            </Heading>
-            {weight && weight !== '0' ? (
               <QRCodeSVG
                 value={weight}
-                size={200}
+                bgColor="#6f7381"
+                size={280}
                 level="H"
                 marginSize={4}
                 className="qr-code"
               />
-            ) : (
-              <Heading size={700} className="qr-waiting" color="muted">
-                Esperando peso...
-              </Heading>
-            )}
-            <Heading size={700} className="qr-weight" color="muted">
-              Peso: {weight} Kg
-            </Heading>
           </div>
         </Card>
       </div>
