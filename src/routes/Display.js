@@ -64,10 +64,10 @@ const Display = ({ data, ...props }) => {
             </Heading>
             <QRCodeSVG
               value={weight}
-              bgColor="#6f7381"
+              bgColor="#ffffff"
               size={500}
               level="H"
-              marginSize={4}
+              marginSize={2}
             />
             <Heading size={1000} className="qr-weight">
               Peso: {weight} Kg

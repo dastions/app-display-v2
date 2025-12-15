@@ -15,12 +15,16 @@
 }
 
 .qr-title {
+  font-family: "DigitalCounter7";
   color: white;
   font-size: 5rem;
+  font-weight: bold;
 }
 
 .qr-weight {
+  font-family: "DigitalCounter7";
   color: white; 
   font-size: 5rem;
+  font-weight: bold;
 }
 
