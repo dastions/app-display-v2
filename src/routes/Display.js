@@ -7,6 +7,7 @@ import "../App.css";
 const Display = ({ data, ...props }) => {
   const [weight, setWeight] = useState('0');
   const [code, setCode] = useState('0');
+  const [qrSize, setQrSize] = useState(500);
 
   useEffect(() => {
     if (data?.visor?.weight) {
@@ -19,41 +20,60 @@ const Display = ({ data, ...props }) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const updateQrSize = () => {
+      // Calcula el tamaño del QR basado en la altura del viewport
+      // Mantiene un máximo de 500px para pantallas grandes
+      const calculatedSize = Math.min(window.innerHeight * 0.46, 500);
+      setQrSize(calculatedSize);
+    };
+
+    updateQrSize();
+    window.addEventListener('resize', updateQrSize);
+    return () => window.removeEventListener('resize', updateQrSize);
+  }, []);
+
   return (
-    <div>
-      <div>
+    <div style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Card
-          minHeight={300}
           padding={16}
           display="flex"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
+          height="100%"
+          width="100%"
+          backgroundColor="transparent"
         >
           {/* Peso arriba */}
-          <div>
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <Card
               elevation={1}
               padding={0}
-              width={1300}
-              height={200}
+              width="68vw"
+              height="18.5vh"
               backgroundColor="#FFB020"
               textAlign="right"
-              marginTop={20}
               overflow="hidden"
               display="flex"
               alignItems="center"
               justifyContent="space-between"
               position="relative"
             >
-              <div>
+              <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
                 <img
-                  width={300}
                   src={MainLogo}
                   alt=""
+                  style={{ 
+                    height: '100%',
+                    width: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'contain'
+                  }}
                 />
               </div>
-              <Heading marginTop={0} fontSize={100} paddingRight={20} className="weight-heading">{weight} Kg</Heading>
+              <Heading marginTop={0} fontSize="clamp(60px, 9.3vh, 100px)" paddingRight={20} className="weight-heading">{weight} Kg</Heading>
             </Card>
           </div>
 
@@ -65,7 +85,7 @@ const Display = ({ data, ...props }) => {
             <QRCodeSVG
               value={weight}
               bgColor="#ffffff"
-              size={500}
+              size={qrSize}
               level="H"
               marginSize={2}
             />

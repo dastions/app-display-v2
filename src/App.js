@@ -28,17 +28,8 @@ const App = (props) => {
 
   return (
     <div className="app-container">
-      {/* Contenedor izquierdo - Main Logo */}
-      <div> 
-        <NavLink
-          key={'main-nav'}
-          to={''}
-        >
-        </NavLink>
-      </div>
-
       {/* Contenedor central - Display */}
-      <div>
+      <div style={{ width: '100%', height: '100%' }}>
         <Routes>
           <Route
             exact
@@ -46,10 +37,6 @@ const App = (props) => {
             element={ <Display data={data} /> }
           />
         </Routes>
-      </div>
-
-      {/* Contenedor derecho - Vacío */}
-      <div>
       </div>
     </div>
   );
