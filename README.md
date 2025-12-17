@@ -80,27 +80,52 @@ exec openbox-session
 
 ```bash
 #!/bin/bash
+set -euo pipefail
 
-# Esperar IP en wlan0 o eth0
-while [[ -z "$(ip addr show wlan0 | grep 'inet ')" && -z "$(ip addr show eth0 | grep 'inet ')" ]]; do
-    echo "Esperando IP..."
-    sleep 2
+URL="http://localhost:2000"
+
+# En Debian suele ser /usr/bin/chromium
+CHROME_BIN="$(command -v chromium || command -v chromium-browser)"
+
+# Perfil dedicado (recomendado). Si quieres que sea 100% inmune a cortes de luz:
+# PROFILE_DIR="/run/chromium-kiosk"
+# (en ese caso no persiste nada entre reinicios)
+PROFILE_DIR="/home/dastions/.config/chromium-kiosk"
+
+# Espera a tener ruta por defecto IPv4 (más robusto que wlan0/eth0)
+while ! ip -4 route show default | grep -q . ; do
+  echo "Esperando red..."
+  sleep 2
 done
 
-# Espera extra antes de lanzar Chromium
-sleep 10
+sleep 5
 
-/usr/bin/chromium-browser \
+# 1) Mata cualquier Chromium previo (y procesos hijos tipo crashpad/renderers)
+pkill -u "$(id -un)" -f "chromium|chrome" 2>/dev/null || true
+sleep 1
+pkill -9 -u "$(id -un)" -f "chromium|chrome" 2>/dev/null || true
+
+# 2) Limpia locks + sesión del perfil (típico tras corte de corriente)
+mkdir -p "$PROFILE_DIR"
+rm -f "$PROFILE_DIR"/Singleton* 2>/dev/null || true
+
+# En Chromium moderno la sesión suele estar en Default/Sessions (Session_* / Tabs_*)
+rm -rf "$PROFILE_DIR/Default/Sessions" 2>/dev/null || true
+
+# Por compatibilidad (algunas builds aún usan estos nombres)
+rm -f "$PROFILE_DIR"/Default/{Current\ Tabs,Current\ Session,Last\ Tabs,Last\ Session} 2>/dev/null || true
+
+# 3) Arranca kiosk/app con perfil dedicado (evita ventana extra)
+exec "$CHROME_BIN" \
+  --user-data-dir="$PROFILE_DIR" \
   --kiosk \
-  --incognito \
   --noerrdialogs \
   --disable-infobars \
   --disable-session-crashed-bubble \
   --disable-popup-blocking \
   --no-first-run \
-  --disable-features=TranslateUI,TabSearch,ExtensionsToolbarMenu \
   --overscroll-history-navigation=0 \
-  --app="http://localhost:5173/onboarding-01"
+  --app="$URL"
 ```
 
 Dar permisos:
