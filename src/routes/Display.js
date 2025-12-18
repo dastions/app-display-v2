@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import MainLogo from "../logo.png"
+import MainLogo from "../logo.png";
 import { Pane, Card, Heading, AddIcon } from "evergreen-ui";
 import "../App.css";
 
 const Display = ({ data, ...props }) => {
-  const [weight, setWeight] = useState('0');
-  const [code, setCode] = useState('0');
+  const [weight, setWeight] = useState("0");
   const [qrSize, setQrSize] = useState(500);
+  const [stable, setStable] = useState(false);
 
   useEffect(() => {
     if (data?.visor?.weight) {
@@ -15,27 +15,45 @@ const Display = ({ data, ...props }) => {
       setWeight(weightValue.toString());
     }
 
-    if (data?.visor?.qr?.code) {
-      setCode(data.visor.qr.code);
+    if (
+      data?.visor &&
+      Object.prototype.hasOwnProperty.call(data.visor, "stable")
+    ) {
+      setStable(Boolean(data.visor.stable));
     }
   }, [data]);
 
   useEffect(() => {
     const updateQrSize = () => {
-      // Calcula el tamaño del QR basado en la altura del viewport
-      // Mantiene un máximo de 500px para pantallas grandes
       const calculatedSize = Math.min(window.innerHeight * 0.46, 500);
       setQrSize(calculatedSize);
     };
 
     updateQrSize();
-    window.addEventListener('resize', updateQrSize);
-    return () => window.removeEventListener('resize', updateQrSize);
+    window.addEventListener("resize", updateQrSize);
+    return () => window.removeEventListener("resize", updateQrSize);
   }, []);
 
   return (
-    <div style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Card
           padding={16}
           display="flex"
@@ -47,10 +65,12 @@ const Display = ({ data, ...props }) => {
           backgroundColor="transparent"
         >
           {/* Peso arriba */}
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
             <Card
               elevation={1}
-              padding={0}
+              padding={2}
               width="68vw"
               height="18.5vh"
               backgroundColor="#FFB020"
@@ -61,25 +81,42 @@ const Display = ({ data, ...props }) => {
               justifyContent="space-between"
               position="relative"
             >
-              <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <img
                   src={MainLogo}
                   alt=""
-                  style={{ 
-                    height: '100%',
-                    width: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'contain'
+                  style={{
+                    height: "100%",
+                    width: "auto",
+                    maxWidth: "100%",
+                    objectFit: "contain",
                   }}
                 />
               </div>
-              <Heading marginTop={0} fontSize="clamp(60px, 9.3vh, 100px)" paddingRight={20} className="weight-heading">{weight} Kg</Heading>
+              <Heading
+                marginTop={0}
+                fontSize="clamp(60px, 9.3vh, 100px)"
+                paddingRight={20}
+                className="weight-heading"
+              >
+                {weight} Kg
+              </Heading>
             </Card>
           </div>
 
           {/* QR abajo */}
           <div className="qr-container">
-            <Heading size={1000} className="qr-title">
+            <Heading
+              size={1000}
+              className="qr-title"
+              style={{ color: "white" }}
+            >
               Código QR del Peso
             </Heading>
             <QRCodeSVG
@@ -89,8 +126,49 @@ const Display = ({ data, ...props }) => {
               level="H"
               marginSize={2}
             />
-            <Heading size={1000} className="qr-weight">
-              Peso: {weight} Kg
+            <Heading
+              size={1000}
+              className="qr-weight"
+              style={{ color: "white" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0.6vh",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "0.45em",
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    opacity: 0.8,
+                  }}
+                >
+                  Estado
+                </span>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "6px 18px",
+                    borderRadius: 999,
+                    backgroundColor: stable ? "#16a34a" : "#facc15",
+                    color: "#111827",
+                    fontSize: "0.55em",
+                    fontWeight: 700,
+                    fontFamily:
+                      'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                    boxShadow:
+                      "0 0 0 1px rgba(255,255,255,0.25), 0 10px 20px rgba(0,0,0,0.35)",
+                  }}
+                >
+                  {stable ? "Estable" : "Pesando..."}
+                </span>
+              </div>
             </Heading>
           </div>
         </Card>
