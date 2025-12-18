@@ -136,15 +136,15 @@ const Display = ({ data, ...props }) => {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  gap: "1vh",
+                  gap: "1.2vh",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "0.6em",
+                    fontSize: "0.9em",
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    opacity: 0.9,
+                    opacity: 1,
                   }}
                 >
                   Estado
@@ -154,11 +154,11 @@ const Display = ({ data, ...props }) => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: "8px 22px",
+                    padding: "12px 30px",
                     borderRadius: 999,
                     backgroundColor: stable ? "#16a34a" : "#facc15",
                     color: "#111827",
-                    fontSize: "0.7em",
+                    fontSize: "1.05em",
                     fontWeight: 700,
                     fontFamily:
                       'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
