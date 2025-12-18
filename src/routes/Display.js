@@ -129,7 +129,7 @@ const Display = ({ data, ...props }) => {
             <Heading
               size={1000}
               className="qr-weight"
-              style={{ color: "white" }}
+              style={{ color: "white", marginTop: "1.2vh" }}
             >
               <div
                 style={{
