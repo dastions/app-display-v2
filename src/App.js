@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 
 import { SocketContext } from './context';
@@ -7,8 +7,24 @@ import './App.css';
 
 import Display from './routes/Display';
 
+const REFRESH_INTERVAL = 200; 
+
 const App = (props) => {
-  const { data } = useContext(SocketContext);
+  
+  const [data, setData] = useState({ });
+  const { socket, socketError } = useContext(SocketContext);
+
+  
+  useEffect(() => {
+    setInterval(() => {
+      socket.emit('refresh');
+    }, REFRESH_INTERVAL);
+
+    socket.on('refresh', (data) => {
+      console.log('Data recibida:', data);
+      setData(data);
+    });
+  }, [socket]);
 
   return (
     <div className="app-container">
@@ -18,7 +34,7 @@ const App = (props) => {
           <Route
             exact
             path="/"
-            element={ <Display data={data} /> }
+            element={ <Display data={data} socketError={socketError} /> }
           />
         </Routes>
       </div>

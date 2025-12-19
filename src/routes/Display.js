@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import MainLogo from "../logo.png";
 import { Card, Heading } from "evergreen-ui";
 import "../App.css";
-import { SocketContext } from "../context";
 
-const Display = ({ data, ...props }) => {
+const Display = ({ data, socketError, ...props }) => {
   const [weight, setWeight] = useState("0");
   const [qrSize, setQrSize] = useState(500);
   const [stable, setStable] = useState(false);
-  const { SocketError } = useContext(SocketContext);
 
   useEffect(() => {
     if (data?.visor?.weight) {
@@ -105,8 +103,8 @@ const Display = ({ data, ...props }) => {
                 <span className="status-label">
                   Estado
                 </span>
-                <span className={`status-badge ${SocketError ? 'error' : (stable ? 'stable' : 'weighing')}`}>
-                  {SocketError ? "Error de Conexión" : (stable ? "Estable" : "Pesando...")}
+                <span className={`status-badge ${socketError ? 'error' : stable ? 'stable' : 'weighing'}`}>
+                  {socketError ? "Error de conexión" : stable ? "Estable" : "Pesando..."}
                 </span>
               </div>
             </Heading>

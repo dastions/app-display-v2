@@ -1,55 +1,25 @@
 import React, { createContext, useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 
-const SocketContext = createContext({ socket: null, data: {} });
+const SocketContext = createContext({ socket: null, socketError: false });
 
 const socketUrl = process.env.SOCKET_URL || 'http://192.168.1.7:4000';
-const REFRESH_INTERVAL = 200;
 
 const SocketProvider = ({ children }) => {
   const socket = socketIOClient(socketUrl);
-  const [data, setData] = useState({});
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (!socket.connected) {
-      setError('Error de conexión');
-    }
-
-    const handleConnect = () => {
-      setError(null);
-    };
-
-    const handleConnectError = () => {
-      setError('Error de conexión');
-    };
-
-    socket.on('connect', handleConnect);
-    socket.io.on('error', handleConnectError);
-
-    return () => {
-      socket.off('connect', handleConnect);
-      socket.io.off('error', handleConnectError);
-    };
-  }, [socket]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      socket.emit('refresh');
-    }, REFRESH_INTERVAL);
-
-    socket.on('refresh', (receivedData) => {
-      console.log('Data recibida:', receivedData);
-      setData(receivedData);
+    socket.io.on("error", () => {
+      setError(true);
     });
-
-    return () => {
-      clearInterval(intervalId);
-      socket.off('refresh');
-    };
+    
+    socket.on("connect", () => {
+      setError(false);
+    });
   }, [socket]);
 
-  return <SocketContext.Provider value={{ socket, data, SocketError: error }}>{children}</SocketContext.Provider>;
+  return <SocketContext.Provider value={{ socket, socketError: error }}>{children}</SocketContext.Provider>;
 };
 
 export { SocketContext, SocketProvider };
