@@ -10,18 +10,19 @@
 }
 
 .qr-container {
-  margin-top: 3vh;
+  margin-top: 2vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5vh;
+  gap: 1vh;
 }
 
 .qr-title {
-  font-family: "DigitalCounter7";
-  color: white;
-  font-size: clamp(2rem, 4vh, 5rem);
+  font-family: "system-ui" !important;
+  color: white !important;
+  padding-bottom: 1vh;
+  font-size: clamp(2rem, 5vh, 5rem);
   font-weight: bold;
 }
 
@@ -30,5 +31,87 @@
   color: white; 
   font-size: clamp(2rem, 4vh, 5rem);
   font-weight: bold;
+}
+
+/* Display component styles */
+.display-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.display-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.display-weight-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.display-logo-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.display-logo {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.qr-weight-content {
+  color: white !important;
+  margin-top: 1.2vh;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+}
+
+.status-label {
+  font-size: 0.9em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 1;
+  font-family: 'system-ui';
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 100px;
+  border-radius: 999px;
+  color: #111827;
+  font-size: 1.05em;
+  font-weight: 700;
+  font-family: 'system-ui';
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.25), 0 10px 20px rgba(0,0,0,0.35);
+}
+
+.status-badge.stable {
+  background-color: #16a34a;
+}
+
+.status-badge.weighing {
+  background-color: #facc15;
+}
+
+.status-badge.error {
+  background-color: #ef4444;
 }
 

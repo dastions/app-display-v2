@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import MainLogo from "../logo.png";
-import { Pane, Card, Heading, AddIcon } from "evergreen-ui";
+import { Card, Heading } from "evergreen-ui";
 import "../App.css";
+import { SocketContext } from "../context";
 
 const Display = ({ data, ...props }) => {
   const [weight, setWeight] = useState("0");
   const [qrSize, setQrSize] = useState(500);
   const [stable, setStable] = useState(false);
+  const { SocketError } = useContext(SocketContext);
 
   useEffect(() => {
     if (data?.visor?.weight) {
@@ -35,25 +37,8 @@ const Display = ({ data, ...props }) => {
   }, []);
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+    <div className="display-container">
+      <div className="display-inner">
         <Card
           padding={16}
           display="flex"
@@ -65,13 +50,11 @@ const Display = ({ data, ...props }) => {
           backgroundColor="transparent"
         >
           {/* Peso arriba */}
-          <div
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
+          <div className="display-weight-wrapper">
             <Card
               elevation={1}
               padding={2}
-              width="68vw"
+              width="100%"
               height="18.5vh"
               backgroundColor="#FFB020"
               textAlign="right"
@@ -81,22 +64,11 @@ const Display = ({ data, ...props }) => {
               justifyContent="space-between"
               position="relative"
             >
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <div className="display-logo-container">
                 <img
                   src={MainLogo}
                   alt=""
-                  style={{
-                    height: "100%",
-                    width: "auto",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
+                  className="display-logo"
                 />
               </div>
               <Heading
@@ -115,7 +87,6 @@ const Display = ({ data, ...props }) => {
             <Heading
               size={1000}
               className="qr-title"
-              style={{ color: "white" }}
             >
               Código QR del Peso
             </Heading>
@@ -128,45 +99,14 @@ const Display = ({ data, ...props }) => {
             />
             <Heading
               size={1000}
-              className="qr-weight"
-              style={{ color: "white", marginTop: "1.2vh" }}
+              className="qr-weight qr-weight-content"
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "1.2vh",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.9em",
-                    letterSpacing: "0.16em",
-                    textTransform: "uppercase",
-                    opacity: 1,
-                  }}
-                >
+              <div className="status-container">
+                <span className="status-label">
                   Estado
                 </span>
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "12px 30px",
-                    borderRadius: 999,
-                    backgroundColor: stable ? "#16a34a" : "#facc15",
-                    color: "#111827",
-                    fontSize: "1.05em",
-                    fontWeight: 700,
-                    fontFamily:
-                      'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-                    boxShadow:
-                      "0 0 0 1px rgba(255,255,255,0.25), 0 10px 20px rgba(0,0,0,0.35)",
-                  }}
-                >
-                  {stable ? "Estable" : "Pesando..."}
+                <span className={`status-badge ${SocketError ? 'error' : (stable ? 'stable' : 'weighing')}`}>
+                  {SocketError ? "Error de Conexión" : (stable ? "Estable" : "Pesando...")}
                 </span>
               </div>
             </Heading>
