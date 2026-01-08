@@ -3,7 +3,7 @@ import socketIOClient from 'socket.io-client';
 
 const SocketContext = createContext({ socket: null, socketError: false });
 
-const socketUrl = process.env.SOCKET_URL || 'http://192.168.1.7:4000';
+const socketUrl = process.env.SOCKET_URL || 'http://192.168.1.7:4000' || 'http://localhost:4000' || 'http://host.docker.internal:4000';
 
 const SocketProvider = ({ children }) => {
   const socket = socketIOClient(socketUrl);

@@ -36,6 +36,14 @@ const Display = ({ data, socketError, ...props }) => {
 
   return (
     <div className="display-container">
+      {/* Banner de error de conexión */}
+      {socketError && (
+        <div className="connection-error-banner">
+          <span className="connection-error-text">
+            ⚠️ Error de conexión - Sin conexión a internet
+          </span>
+        </div>
+      )}
       <div className="display-inner">
         <Card
           padding={16}
@@ -103,8 +111,8 @@ const Display = ({ data, socketError, ...props }) => {
                 <span className="status-label">
                   Estado
                 </span>
-                <span className={`status-badge ${socketError ? 'error' : stable ? 'stable' : 'weighing'}`}>
-                  {socketError ? "Error de conexión" : stable ? "Estable" : "Pesando..."}
+                <span className={`status-badge ${stable ? 'stable' : 'weighing'}`}>
+                  {stable ? "Estable" : "Pesando..."}
                 </span>
               </div>
             </Heading>

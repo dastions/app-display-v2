@@ -115,3 +115,36 @@
   background-color: #ef4444;
 }
 
+.connection-error-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #ef4444;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+.connection-error-text {
+  font-family: 'system-ui';
+  font-size: clamp(0.9rem, 1.5vh, 1.2rem);
+  font-weight: 600;
+  display: inline-block;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
