@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import MainLogo from "../logo.png";
+import BasculasLogo from "../basculascordero-white.png";
 import { Card, Heading } from "evergreen-ui";
 import "../App.css";
 
@@ -37,13 +38,13 @@ const Display = ({ data, socketError, ...props }) => {
   return (
     <div className="display-container">
       {/* Banner de error de conexión */}
-      {socketError && (
+{/*       {socketError && (
         <div className="connection-error-banner">
           <span className="connection-error-text">
             ⚠️ Error de conexión - Sin conexión a internet
           </span>
         </div>
-      )}
+      )} */}
       <div className="display-inner">
         <Card
           padding={16}
@@ -83,7 +84,7 @@ const Display = ({ data, socketError, ...props }) => {
                 paddingRight={20}
                 className="weight-heading"
               >
-                {weight} Kg
+                {weight} kg
               </Heading>
             </Card>
           </div>
@@ -118,6 +119,14 @@ const Display = ({ data, socketError, ...props }) => {
             </Heading>
           </div>
         </Card>
+      </div>
+      {/* Logo de la empresa en esquina inferior derecha */}
+      <div className="company-logo-bottom-right">
+        <img
+          src={BasculasLogo}
+          alt="Logo de la empresa"
+          className="company-logo-bottom"
+        />
       </div>
     </div>
   );
